@@ -1,7 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-export default function Curriculum() {
-  return (
-    <div>Curriculum</div>
-  )
+const Curriculum = () => {
+    return (
+        <div>
+            
+        </div>
+    );
 }
+
+export default Curriculum;

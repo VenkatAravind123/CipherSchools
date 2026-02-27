@@ -37,14 +37,14 @@ function App() {
         <Route path="attempts" element={<Attempts />} />
         <Route path="profile" element={<Profile />} />
       </Route>
-       <Route path="/admin" element={<AdminLayout />}>
+      <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<AdminDashboard />} />
         <Route path="users" element={<User />} />
         <Route path="assignments" element={<AdminAssignments />} />
         <Route path="assignments/create" element={<CreateAssignment />} />
         <Route path="assignments/edit/:id" element={<EditAssignment/>} />
         <Route path="profile" element={<AdminProfile />} />
-      </Route>
+      </Route>  
 
       <Route path="*" element={<div style={{ padding: 16 }}>Not found</div>} />
         </Routes>

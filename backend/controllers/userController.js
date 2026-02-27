@@ -3,6 +3,7 @@ const User = require("../models/User");
 const Assignment = require("../models/Assignment.js");
 const Submission = require("../models/Submission.js")
 const jwt = require("jsonwebtoken");
+const {GoogleGenerativeAI} = require("@google/generative-ai");
 const {runSandboxQuery,compareResults} = require("../utility/sandboxUtility.js")
 
 const isValidEmail = (email) => /^\S+@\S+\.\S+$/.test(String(email || "").trim());
@@ -250,6 +251,42 @@ exports.getSubmissionsByUser = async(req,res) =>{
     return res.status(500).json({message:err.message});
   }
 }
+
+
+
+exports.getHint = async (req,res) =>{
+    try{
+        const {currentSQL,description,setupSQL} = req.body;
+
+        if(!currentSQL){
+            return res.status(400).json({message:"You must type some SQL first to get an AI Hint"});
+        }
+
+        const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+        const model = genAI.getGenerativeModel({model:"gemini-2.5-flash"});
+        const prompt = `
+       You are an expert SQL teacher. The student is solving this assignment: "${description}".
+      Database Schema: ${setupSQL || "Not explicitly provided."}
+      Here is what the student has typed so far:
+      \`\`\`sql
+      ${currentSQL}
+      \`\`\`
+      Task:
+      Check the student's code and give them a short 1-2 sentence hint pointing out syntax errors or conceptual flaws.
+      IMPORTANT RULE: DO NOT GIVE THEM THE SOLUTION CODE. DO NOT WRITE ANY FINAL SQL CODE. Help them get there themselves.
+    `;
+
+    const result = await model.generateContent(prompt);
+    console.log(result.response.text());
+    return res.json({hint:result.response.text()});
+    }
+    catch(err){
+        console.error("AI Hint Error:",err);
+        return res.status(500).json({message:"Failed to generate AI hint."});
+    }
+};
+
+
 function blockDangerousSQL(query) {
   const upper = query.toUpperCase().replace(/\s+/g, " ").trim();
   const dangerous = [

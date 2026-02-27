@@ -9,7 +9,8 @@ const API = "http://localhost:5000";
 export default function AssignmentPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-
+ const [aiHint, setAiHint] = useState("");
+  const [isHintLoading, setIsHintLoading] = useState(false);
   const [assignment, setAssignment] = useState(null);
   const [query, setQuery] = useState("");
   const [runResult, setRunResult] = useState(null);
@@ -110,6 +111,35 @@ export default function AssignmentPage() {
     }
   };
 
+  const handleGetAiHint = async () =>{
+     if (showHint) {
+      setShowHint(false);
+      return;
+    }
+    setShowHint(true);
+    
+    // If we've already generated the hint, don't ping the API again!
+    if (aiHint) return;
+    // Fetch the AI Hint
+    setIsHintLoading(true);
+    try {
+      const res = await axios.post(
+        `${API}/api/auth/assignment/${id}/hint`,
+        { 
+          currentSQL: query, 
+          description: assignment.description,
+          setupSQL: assignment.setupSQL
+        },
+        { withCredentials: true }
+      );
+      setAiHint(res.data.hint);
+    } catch (err) {
+      setAiHint(err.response?.data?.message || "Failed to load AI hint.");
+    } finally {
+      setIsHintLoading(false);
+    }
+  }
+
   // ── Loading / Error states ────────────────────────────
   if (loading.page) {
     return (
@@ -157,7 +187,7 @@ export default function AssignmentPage() {
 
         {assignment.hint && (
           <div className="assignment-page__hint-section">
-            <button
+            {/* <button
               className="assignment-page__hint-btn"
               onClick={() => setShowHint(!showHint)}
             >
@@ -165,7 +195,17 @@ export default function AssignmentPage() {
             </button>
             {showHint && (
               <p className="assignment-page__hint-text">{assignment.hint}</p>
-            )}
+            )} */}
+            <button className="assignment-page__hint-btn" onClick={handleGetAiHint} disabled={isHintLoading}>{showHint ? "Hide Hint" : "Get Hint"}</button>
+            {showHint && (
+    <div className="assignment-page__hint-text" style={{ marginTop: "10px", padding: "10px", borderRadius: "5px" }}>
+      {isHintLoading ? (
+        <p style={{ color: "#aaa", fontStyle: "italic", margin: 0 }}>🤖 AI is analyzing your code...</p>
+      ) : (
+        <p style={{ margin: 0 }}>{aiHint}</p>
+      )}
+    </div>
+  )}
           </div>
         )}
       </div>

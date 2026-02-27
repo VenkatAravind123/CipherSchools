@@ -15,5 +15,6 @@ router.post("/assignment/:id/run",requireAuth,userController.runQuery)
 router.get("/getexpectedoutput/:id",requireAuth,userController.getExpectedOutput);
 router.post("/submit/:id",requireAuth,userController.submitAssignment);
 router.get("/getsubmissionsbyuser",requireAuth,userController.getSubmissionsByUser);
+router.post("/assignment/:id/hint",requireAuth,userController.getHint);
 
 module.exports = router;
