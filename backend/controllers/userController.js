@@ -286,7 +286,7 @@ exports.getHint = async (req,res) =>{
     }
 };
 
-
+//These are the SQL Commands that are blocked in sandbox means when tries to enter these commands in sandbox it will throw error
 function blockDangerousSQL(query) {
   const upper = query.toUpperCase().replace(/\s+/g, " ").trim();
   const dangerous = [
@@ -299,7 +299,7 @@ function blockDangerousSQL(query) {
     "CREATE EXTENSION",
     "DROP SCHEMA", "CREATE SCHEMA",
   ];
-
+//Ther
   for (const d of dangerous) {
     if (upper.includes(d)) {
       return `Blocked: "${d}" is not allowed in the sandbox.`;
