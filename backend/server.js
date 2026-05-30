@@ -8,12 +8,16 @@ require("dotenv").config()
 const userRoutes = require("./routes/userRoutes.js")
 const adminRoutes = require("./routes/adminRoutes.js")
 
-const dburl = process.env.MONGO_DB_URL
-mongoose.connect(dburl).then(() => {
-    console.log("Connected to DB Successfully")
-}).catch((err) => {
-    console.log(err.message)
-});
+const dburl = process.env.MONGO_DB_URL;
+if (!dburl) {
+    console.error("CRITICAL ERROR: MONGO_DB_URL is missing from environment variables!");
+} else {
+    mongoose.connect(dburl).then(() => {
+        console.log("Connected to DB Successfully")
+    }).catch((err) => {
+        console.error("MongoDB Connection Error:", err.message)
+    });
+}
 
 
 const app = express()
@@ -27,6 +31,7 @@ app.use(cookieParser())
 app.use("/api/auth",userRoutes)
 app.use("/api/admin",adminRoutes)
  
+app.get("/", (req, res) => res.send("CipherSQL Backend is running!"));
 
 
 
