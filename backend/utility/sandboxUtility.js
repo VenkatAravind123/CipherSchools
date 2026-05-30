@@ -1,11 +1,11 @@
 const pgPool = require("../config/pgPool.js");
-const { v4: uuidv4 } = require("uuid");
+const crypto = require("crypto");
 
 /**
  * Creates a temp PG schema, runs setupSQL + userQuery, drops schema.
  */
 async function runSandboxQuery(setupSQL, userQuery) {
-  const schema = `sandbox_${uuidv4().replace(/-/g, "")}`;
+  const schema = `sandbox_${crypto.randomUUID().replace(/-/g, "")}`;
   const client = await pgPool.connect();
 
   try {
