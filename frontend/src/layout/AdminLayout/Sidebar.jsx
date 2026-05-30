@@ -8,7 +8,7 @@ export default function Sidebar({ title, items }) {
 
   const handleLogout = async () => {
     try {
-      const res = await globalThis.fetch("http://localhost:5000/api/auth/logout", {
+      const res = await globalThis.fetch((import.meta.env.VITE_API_BASE_URL || "http://localhost:5000") + "/api/auth/logout", {
         method: "POST",
         credentials: "include",
       });

@@ -4,7 +4,7 @@ import axios from "axios";
 import "./Assignment.scss";
 import Editor from "@monaco-editor/react";
 
-const API = "http://localhost:5000";
+const API = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 export default function AssignmentPage() {
   const { id } = useParams();

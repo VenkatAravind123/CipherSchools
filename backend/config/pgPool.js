@@ -7,6 +7,7 @@ const pgPool = new Pool({
     user: process.env.PG_USER || "postgres",
     password: process.env.PG_PASSWORD || "postgres",
     database: process.env.PG_DATABASE || "ciphersql_sandbox",
+    ssl: process.env.PG_SSL === "true" ? { rejectUnauthorized: false } : false,
     max: 20,
     idleTimeoutMillis: 30000,
 });

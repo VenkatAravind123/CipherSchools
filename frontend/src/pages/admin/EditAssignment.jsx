@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 
+const API = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
 export default function EditAssignment() {
   const navigate = useNavigate();
   const [assignment, setAssignment] = useState(null);
@@ -29,7 +31,7 @@ export default function EditAssignment() {
       try {
         setLoading(true);
         setError("");
-        const res = await axios.get(`http://localhost:5000/api/admin/getassignmentadmin/${id}`, {
+        const res = await axios.get(`${API}/api/admin/getassignmentadmin/${id}`, {
           withCredentials: true,
         });
         setAssignment(res.data.assignment);
@@ -50,7 +52,7 @@ export default function EditAssignment() {
     setError("");
     setSuccess("");
     try {
-      await axios.put(`http://localhost:5000/api/admin/updateassignment/${id}`, form, {
+      await axios.put(`${API}/api/admin/updateassignment/${id}`, form, {
         withCredentials: true,
       });
       setSuccess("Assignment updated successfully!");
