@@ -8,6 +8,9 @@ require("dotenv").config()
 const userRoutes = require("./routes/userRoutes.js")
 const adminRoutes = require("./routes/adminRoutes.js")
 
+// Disable command buffering so queries fail-fast when not connected
+mongoose.set("bufferCommands", false);
+
 const dburl = process.env.MONGO_DB_URL;
 if (!dburl) {
     console.error("CRITICAL ERROR: MONGO_DB_URL is missing from environment variables!");
@@ -19,6 +22,53 @@ if (!dburl) {
     });
 }
 
+// Middleware to ensure DB connection is ready before processing API requests
+const connectDB = async (req, res, next) => {
+    if (mongoose.connection.readyState === 1) {
+        return next();
+    }
+    if (mongoose.connection.readyState === 2) {
+        try {
+            await new Promise((resolve, reject) => {
+                const onConnected = () => {
+                    mongoose.connection.off("error", onError);
+                    resolve();
+                };
+                const onError = (err) => {
+                    mongoose.connection.off("connected", onConnected);
+                    reject(err);
+                };
+                mongoose.connection.once("connected", onConnected);
+                mongoose.connection.once("error", onError);
+            });
+            return next();
+        } catch (err) {
+            return res.status(500).json({
+                message: "Database connection failed",
+                error: err.message
+            });
+        }
+    }
+    
+    if (!dburl) {
+        return res.status(500).json({
+            message: "Database configuration error: MONGO_DB_URL is missing from environment variables."
+        });
+    }
+    
+    try {
+        console.log("Re-attempting connection to MongoDB...");
+        await mongoose.connect(dburl);
+        console.log("Connected to MongoDB successfully");
+        next();
+    } catch (err) {
+        console.error("MongoDB reconnection error:", err);
+        return res.status(500).json({
+            message: "Database connection error",
+            error: err.message
+        });
+    }
+};
 
 const app = express()
 //to parse JSON data
@@ -28,6 +78,10 @@ app.use(cors({
 }));
 app.use(express.json())
 app.use(cookieParser())
+
+// Protect API routes by ensuring the DB is connected
+app.use("/api", connectDB)
+
 app.use("/api/auth",userRoutes)
 app.use("/api/admin",adminRoutes)
  
