@@ -1,39 +1,41 @@
 // Variables (same as layout for consistency)
 $sidebar-width: 260px;
 $sidebar-bg: #ffffff;
-$sidebar-text: rgba(255, 255, 255, 0.75);
-$sidebar-text-hover: rgba(255, 255, 255, 0.95);
-$sidebar-text-active: #fff;
-$sidebar-hover-bg: rgba(255, 255, 255, 0.06);
-$sidebar-active-bg: rgba(255, 255, 255, 0.12);
-$border-radius: 10px;
+$sidebar-text: #475569;
+$sidebar-text-active: #2563eb;
+$sidebar-hover-bg: rgba(37, 99, 235, 0.05);
+$sidebar-active-bg: rgba(37, 99, 235, 0.08);
+$border-radius: 8px;
 $transition-speed: 150ms;
 
 .sidebar {
   width: $sidebar-width;
   min-height: 100vh;
   background: $sidebar-bg;
-  padding: 20px 14px;
+  padding: 24px 16px;
   display: flex;
   flex-direction: column;
   position: sticky;
   top: 0;
+  border-right: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.01);
 }
 
 .sidebar__brand {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 800;
-  color: #000000;
+  color: #0f172a;
   padding: 0 12px;
-  margin-bottom: 28px;
-  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+  letter-spacing: -0.025em;
+  display: flex;
+  align-items: center;
 }
 
 .sidebar__nav {
   display: flex;
   flex-direction: column;
- 
-  gap: 6px;
+  gap: 8px;
 }
 
 .sidebar__link {
@@ -42,44 +44,57 @@ $transition-speed: 150ms;
   gap: 12px;
   padding: 12px 14px;
   border-radius: $border-radius;
-  color: black;
+  color: $sidebar-text;
   text-decoration: none;
   font-size: 0.95rem;
-  font-weight: 500;
-  transition: background $transition-speed ease, color $transition-speed ease;
-}
+  font-weight: 600;
+  transition: all $transition-speed ease;
+  position: relative;
 
-.sidebar__link:hover {
-  transform: scale(1.1);
-}
-.sidebar__link1{
-  padding: 15px;
-  width: 100%;
-  color: black;
-  background-color: white;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  border: 1px solid black;
-  transform: 0.5s ease;
-}
-.sidebar__link1:hover{
-  cursor: pointer;
- 
+  &:hover {
+    background-color: $sidebar-hover-bg;
+    color: #0f172a;
+  }
 }
 
 .sidebar__link--active {
   background: $sidebar-active-bg;
-  font-weight: 600;
+  color: $sidebar-text-active;
+  font-weight: 700;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 20px;
+    background: #2563eb;
+    border-radius: 0 4px 4px 0;
+  }
 }
 
-.sidebar__link--active::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  width: 4px;
-  height: 24px;
-  background: #3b82f6;
-  border-radius: 0 4px 4px 0;
+.sidebar__link1 {
+  padding: 10px 14px;
+  width: 100%;
+  color: #ef4444;
+  background-color: transparent;
+  border-radius: $border-radius;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all $transition-speed ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(239, 68, 68, 0.06);
+    border-color: rgba(239, 68, 68, 0.3);
+  }
 }
 
 .sidebar__section {
@@ -89,14 +104,14 @@ $transition-speed: 150ms;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: rgba(255, 255, 255, 0.4);
+  color: #94a3b8;
   margin-bottom: 8px;
 }
 
 .sidebar__footer {
   margin-top: auto;
   padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
 }
 
 .sidebar__icon-only {
@@ -116,7 +131,9 @@ $transition-speed: 150ms;
     flex-direction: row;
     padding: 0;
     z-index: 50;
-    box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+    border-right: none;
+    border-top: 1px solid rgba(15, 23, 42, 0.06);
   }
 
   .sidebar__brand,
@@ -141,20 +158,19 @@ $transition-speed: 150ms;
     flex: 1;
     justify-content: center;
     text-align: center;
-  }
-
-  .sidebar__link:hover {
-    transform: none;
+    font-size: 0.85rem;
   }
 
   .sidebar__link--active {
     background: transparent;
+    color: #2563eb;
   }
 
   .sidebar__link--active::before {
     top: 0;
-    left: 10%;
-    width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
     height: 3px;
     border-radius: 0 0 4px 4px;
   }
@@ -184,7 +200,7 @@ $transition-speed: 150ms;
   }
 
   .sidebar__link1 {
-    padding: 10px;
+    padding: 0;
     height: 100%;
     width: 100%;
     background: transparent;
@@ -193,10 +209,10 @@ $transition-speed: 150ms;
     justify-content: center;
     align-items: center;
     border-radius: 0;
-    color: black;
-  }
+    color: #ef4444;
 
-  .sidebar__link1:hover {
-    background: rgba(0,0,0,0.04);
+    &:hover {
+      background: rgba(239, 68, 68, 0.06);
+    }
   }
 }

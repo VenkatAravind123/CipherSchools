@@ -28,7 +28,15 @@ export default function Sidebar({ title, items }) {
 
   return (
     <aside className="sidebar">
-      <div className="sidebar__brand">{title}</div>
+      <div className="sidebar__brand">
+        <svg stroke="currentColor" fill="none" strokeWidth="2.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="22" width="22" xmlns="http://www.w3.org/2000/svg" style={{ color: '#3b82f6', marginRight: '8px', display: 'inline-block', verticalAlign: 'middle' }}>
+          <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+          <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
+          <path d="M3 12A9 3 0 0 0 21 12"></path>
+          <path d="M9 17h6"></path>
+        </svg>
+        <span style={{ verticalAlign: 'middle' }}>{title}</span>
+      </div>
 
       <nav className="sidebar__nav">
         {items.map((it) => (

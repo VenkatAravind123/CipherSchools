@@ -22,7 +22,7 @@ export default function AppLayout() {
   return (
     <div className="shell">
       <Sidebar
-        title="CipherSQLStudio"
+        title="SQLStudio"
         items={items}
       />
       <main className="shell__main">

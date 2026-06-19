@@ -14,17 +14,9 @@ export default function Home() {
                 <path d="M3 12A9 3 0 0 0 21 12"></path>
                 <path d="M9 17h6"></path>
               </svg>
-              CipherSQLStudio
+              SQLStudio
             </div>
-            <div className='nav-links'>
-                <Link to='/curriculum'>Curriculum</Link>
-                <Link to='/practice'>Practice</Link>
-                <Link to='/pricing'>Pricing</Link>
-            </div>
-            <div className='auth-links'>
-                <Link to='/login'>Login</Link>
-                <Link to='/signup'>Sign Up</Link>
-            </div>
+            
           </div>
         </nav>
 
@@ -133,7 +125,7 @@ export default function Home() {
 
 
         <footer>
-            <p>&copy; 2024 CipherSQL. All rights reserved.</p>
+            <p>&copy; 2026 SQLStudio. All rights reserved.</p>
         </footer>
         
     </div>

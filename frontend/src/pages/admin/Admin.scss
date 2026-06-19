@@ -16,21 +16,25 @@ padding: 16px;
 
   &__create-btn {
     padding: 10px 22px;
-    border: none;
-    border-radius: 10px;
-    background: #0f172a;
+    border: 1px solid #2563eb;
+    border-radius: 8px;
+    background: #2563eb;
     color: #fff;
-    font-weight: 650;
+    font-weight: 600;
     font-size: 0.95rem;
     cursor: pointer;
-    transition: opacity 0.15s ease, transform 0.05s ease;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
 
     &:hover {
-      opacity: 0.85;
+      background: #1d4ed8;
+      border-color: #1d4ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
     }
 
     &:active {
-      transform: translateY(1px);
+      transform: translateY(0);
     }
   }
 
@@ -268,17 +272,17 @@ padding: 16px;
     textarea,
     select {
       padding: 10px 14px;
-      border: 1px solid rgba(15, 23, 42, 0.12);
-      border-radius: 10px;
+      border: 1px solid rgba(15, 23, 42, 0.15);
+      border-radius: 8px;
       font-size: 0.95rem;
       background: #fff;
       color: #0f172a;
-      transition: border-color 0.15s ease;
+      transition: all 0.2s ease;
 
       &:focus {
         outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        border-color: #2563eb;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
       }
 
       &::placeholder {
@@ -327,19 +331,19 @@ padding: 16px;
 
   &__btn {
     padding: 12px 24px;
-    border-radius: 10px;
-    font-weight: 650;
+    border-radius: 8px;
+    font-weight: 600;
     font-size: 0.95rem;
     border: 1px solid transparent;
     cursor: pointer;
-    transition: opacity 0.15s ease, transform 0.05s ease;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 
     &:hover:not(:disabled) {
-      opacity: 0.85;
+      transform: translateY(-2px);
     }
 
     &:active:not(:disabled) {
-      transform: translateY(1px);
+      transform: translateY(0);
     }
 
     &:disabled {
@@ -348,17 +352,26 @@ padding: 16px;
     }
 
     &--primary {
-      background: #0f172a;
+      background: #2563eb;
+      border-color: #2563eb;
       color: #fff;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+
+      &:hover:not(:disabled) {
+        background: #1d4ed8;
+        border-color: #1d4ed8;
+        box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+      }
     }
 
     &--secondary {
       background: transparent;
-      border-color: rgba(15, 23, 42, 0.12);
-      color: #475569;
+      border-color: rgba(15, 23, 42, 0.15);
+      color: #0f172a;
 
       &:hover {
         background: rgba(15, 23, 42, 0.04);
+        border-color: rgba(15, 23, 42, 0.3);
       }
     }
   }
@@ -370,5 +383,139 @@ padding: 16px;
 @media (max-width: 768px) {
   .create-assignment {
     padding: 16px;
+  }
+}
+
+/* Admin Dashboard Card styling */
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 24px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dashboard-card {
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #2563eb 0%, #4f46e5 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+    border-color: rgba(37, 99, 235, 0.15);
+
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  &__value {
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #2563eb;
+  }
+
+  &__label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+  }
+}
+
+/* Users Table Styles */
+.users-container {
+  width: 100%;
+  padding: 16px;
+}
+.users-panel {
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+}
+.users-table-wrapper {
+  overflow-x: auto;
+  margin-top: 10px;
+}
+.users-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+  th {
+    padding: 14px 16px;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #475569;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+    background-color: rgba(15, 23, 42, 0.02);
+  }
+  th:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+  th:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+  td {
+    padding: 16px;
+    font-size: 0.95rem;
+    color: #0f172a;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+    vertical-align: middle;
+  }
+  tr:last-child td {
+    border-bottom: none;
+  }
+  tr:hover td {
+    background-color: rgba(37, 99, 235, 0.015);
+  }
+}
+.user-role-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  display: inline-block;
+  &--admin {
+    background-color: rgba(37, 99, 235, 0.08);
+    color: #2563eb;
+    border: 1px solid rgba(37, 99, 235, 0.15);
+  }
+  &--user {
+    background-color: #f1f5f9;
+    color: #475569;
+    border: 1px solid rgba(15, 23, 42, 0.08);
   }
 }

@@ -5,7 +5,7 @@ $sidebar-text: rgba(255, 255, 255, 0.85);
 $sidebar-text-active: #fff;
 $sidebar-hover-bg: rgba(255, 255, 255, 0.08);
 $sidebar-active-bg: rgba(255, 255, 255, 0.12);
-$main-bg: #f9f9f9;
+$main-bg: aliceblue;
 $border-radius: 10px;
 $transition-speed: 150ms;
 
@@ -43,13 +43,13 @@ $transition-speed: 150ms;
 
 .page h1, .page1 h1 {
   font-size: 1.75rem;
-  font-weight: 700;
+  font-weight: 800;
   margin-bottom: 8px;
-  color: #333;
+  color: #0f172a;
 }
 
 .page p, .page1 p {
-  color: #666;
+  color: #475569;
   line-height: 1.6;
 }
 

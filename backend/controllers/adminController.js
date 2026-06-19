@@ -1,5 +1,6 @@
 const Assignment = require("../models/Assignment.js");
 const Submission = require("../models/Submission.js");
+const User = require("../models/User.js")
 
 const {runSandboxQuery} = require("../utility/sandboxUtility.js")
 
@@ -93,5 +94,16 @@ const deleteAssignment = async (req,res) =>{
   }
 }
 
+const getAllUsers  = async (req,res) => {
+  try{
+    const users  = await User.find({}).select("-password");
+    res.json({users});
+  }
+  catch(err){
+    console.error(err.message);
+    res.status(500).json({message:"Server error retrieving users."});
+  }
+}
 
-module.exports = {createAssignment,getAllAssignments,getAssignmentAdmin,updateAssignment,deleteAssignment}; 
+
+module.exports = {createAssignment,getAllAssignments,getAssignmentAdmin,updateAssignment,deleteAssignment,getAllUsers}; 

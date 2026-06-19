@@ -57,13 +57,21 @@ export default function Login() {
   return (
     <>
       <div className="header">
-        <Link to="/">CipherSQLStudio</Link>
+        <Link to="/" className="brand-logo">
+          <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+            <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
+            <path d="M3 12A9 3 0 0 0 21 12"></path>
+            <path d="M9 17h6"></path>
+          </svg>
+          <span>SQLStudio</span>
+        </Link>
       </div>
 
       <div className="auth-page">
         <div className="auth-card">
           <div className="auth-head">
-            <h1>Welcome back to CipherSQLStudio</h1>
+            <h1>Welcome back to SQLStudio</h1>
             <p>Log in to continue learning SQL with hands-on practice.</p>
           </div>
 

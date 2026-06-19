@@ -17,8 +17,8 @@ export default function AdminLayout(){
 
     return(
         <div className="shell">
-            <Sidebar title="CipherSQLStudio" items={items}/>
-            <main className="shell_main">
+            <Sidebar title="SQLStudio" items={items}/>
+            <main className="shell__main">
                 <Outlet/>
             </main>
         </div>
