@@ -64,10 +64,25 @@ export default function EditAssignment() {
     }
   };
 
+  if (!assignment) {
+    return (
+      <section className="page1 create-assignment">
+        <div className="create-assignment__header">
+          <h1>Edit Assignment</h1>
+          {error ? (
+            <div className="create-assignment__alert create-assignment__alert--error">{error}</div>
+          ) : (
+            <p>Loading assignment...</p>
+          )}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="page1 create-assignment">
       <div className="create-assignment__header">
-        <h1>Edit Assignment</h1>
+        <h1>Edit Assignment: {assignment.title}</h1>
         <p>Update an existing SQL assignment for students.</p>
       </div>
 
