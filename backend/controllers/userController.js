@@ -248,6 +248,18 @@ exports.getSubmissionsByUser = async(req,res) =>{
     return res.json({submissions});
   }
   catch(err){
+    return res.status(500).json({message:"Un"});
+  }
+}
+
+exports.getSubmissionByUserCount = async (req,res) => {
+  try{
+    const userId = req.user.id;
+    const submissionCount = await Submission.countDocuments({user:userId,passed:true});
+
+    return res.json({submissionCount});
+  }
+  catch(err){
     return res.status(500).json({message:err.message});
   }
 }

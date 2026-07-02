@@ -17,6 +17,6 @@ router.post("/submit/:id",requireAuth,userController.submitAssignment);
 router.get("/getsubmissionsbyuser",requireAuth,userController.getSubmissionsByUser);
 router.post("/assignment/:id/hint",requireAuth,userController.getHint);
 
-
+router.get("/getsubmissioncount",requireAuth,userController.getSubmissionByUserCount);
 
 module.exports = router;

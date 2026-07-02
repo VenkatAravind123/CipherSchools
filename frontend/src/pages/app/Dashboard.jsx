@@ -1,7 +1,8 @@
-import React from "react";
+import React,{useState} from "react";
 import "./Dashboard.scss";
 import {useSelector } from 'react-redux';
-
+import { useEffect } from "react";
+import axios from 'axios';
 
 
 function getGreeting() {
@@ -26,18 +27,37 @@ export default function Dashboard() {
   const user = useSelector((state) => state.auth.user);
   const name = getDisplayName(user);
   // Replace with real API data later
-  const stats = {
-    completed: 12,
-    inProgress: 5,
-    accuracy: 0.87,
-    streakDays: 7,
-  };
+  const [stats , setStats] = useState({
+    completed:0,
+    inProgress:0,
+    accuracy:0,
+    streakDays:0,
+  })
 
   const assignments = [
     { id: 1, title: "SQL SELECT Basics", status: "Completed", time: "Today" },
     { id: 2, title: "WHERE + AND/OR", status: "In progress", time: "Yesterday" },
     { id: 3, title: "JOINs Practice Set", status: "Started", time: "2 days ago" },
   ];
+
+  useEffect(() => {
+    const fetchCompletedAssignmentCount = async() => {
+      try{
+        const API = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+        const res = await axios.get(`${API}/api/auth/getsubmissioncount`,{
+          withCredentials:true,
+        });
+        setStats(prev => ({
+          ...prev,
+          completed: res.data.submissionCount
+        }));
+      }
+      catch(err){
+        console.error(err);
+      }
+    }
+    fetchCompletedAssignmentCount()
+  },[])
 
   // const nextUp = [
   //   { id: "n1", title: "GROUP BY & Aggregations", level: "Intermediate", eta: "15 min" },
