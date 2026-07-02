@@ -1,5 +1,8 @@
 import React from "react";
 import "./Dashboard.scss";
+import {useSelector } from 'react-redux';
+
+
 
 function getGreeting() {
   const h = new Date().getHours();
@@ -8,12 +11,10 @@ function getGreeting() {
   return "Good evening";
 }
 
-function getDisplayName() {
+function getDisplayName(user) {
   try {
-    const raw = globalThis.localStorage?.getItem("user");
-    if (!raw) return "";
-    const u = JSON.parse(raw);
-    return u?.name || u?.username || "";
+    if (!user) return "";    
+    return user?.name || user?.username || "";
   } catch {
     return "";
   }
@@ -21,8 +22,9 @@ function getDisplayName() {
 
 export default function Dashboard() {
   const greeting = getGreeting();
-  const name = getDisplayName();
-
+  
+  const user = useSelector((state) => state.auth.user);
+  const name = getDisplayName(user);
   // Replace with real API data later
   const stats = {
     completed: 12,

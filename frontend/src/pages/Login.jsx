@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
+import { useDispatch  } from "react-redux";
+import { loginSuccess } from "../store/authSlice";
 
 export default function Login() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const dispatch = useDispatch();
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
@@ -39,7 +42,7 @@ export default function Login() {
       }
 
       // Optional: store user info for UI (cookie holds the real auth)
-      if (data?.user) localStorage.setItem("user", JSON.stringify(data.user));
+      if (data?.user) dispatch(loginSuccess(data.user))
 
       // Role-based redirect (adjust routes to what you actually have)
       if (data?.user?.role === "admin") {

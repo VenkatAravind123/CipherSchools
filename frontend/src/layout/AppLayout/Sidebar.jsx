@@ -2,10 +2,12 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
 import "./SidebarApp.scss";
-
+import {useDispatch} from 'react-redux';
+import {logout} from '../../store/authSlice'
 export default function Sidebar({ title, items }) {
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
   const handleLogout = async () => {
     try {
       const res = await globalThis.fetch((import.meta.env.VITE_API_BASE_URL || "http://localhost:5000") + "/api/auth/logout", {
@@ -19,7 +21,7 @@ export default function Sidebar({ title, items }) {
         return;
       }
 
-      globalThis.localStorage?.removeItem("user");
+      dispatch(logout())
       navigate("/login", { replace: true });
     } catch {
       globalThis.alert?.("Network error. Please try again.");
